@@ -89,14 +89,6 @@ variable "app_settings" {
   default = {}
 }
 
-variable "app_settings_secrets" {
-  type = object({
-    name           = string
-    resource_group = string
-    secrets        = list(string)
-  })
-}
-
 variable "allowed_ips" {
   // List of ip
   type    = list(string)
