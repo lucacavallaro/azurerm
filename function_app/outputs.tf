@@ -25,9 +25,15 @@ output "master_key" {
   sensitive = true
 }
 
+<<<<<<< HEAD
 # output "app_service_plan_id" {
 #   value = length(azurerm_app_service_plan.this) > 0 ? module.azurerm_app_service_plan.this.id : null
 # }
+=======
+output "app_service_plan_id" {
+  value = length(azurerm_app_service_plan.this) > 0 ? module.azurerm_app_service_plan.this.id : null
+}
+>>>>>>> 0cd1eec3d36f35b23b0a7ca3499d4a164475277a
 
 # output "storage_account" {
 #   value = {
