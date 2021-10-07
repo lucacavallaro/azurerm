@@ -26,7 +26,7 @@ output "master_key" {
 }
 
 output "app_service_plan_id" {
-  value = length(azurerm_app_service_plan.this) > 0 ? module.azurerm_app_service_plan.this[0].id : null
+  value = length(azurerm_app_service_plan.this) > 0 ? module.azurerm_app_service_plan.this.id : null
 }
 
 # output "storage_account" {
