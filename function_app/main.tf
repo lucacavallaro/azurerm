@@ -51,11 +51,6 @@ resource "azurerm_private_endpoint" "blob" {
   resource_group_name = var.resource_group_name
   subnet_id           = var.durable_function.private_endpoint_subnet_id
 
-  private_dns_zone_group {
-    name                 = format("%s-private-dns-zone-group", var.name)
-    private_dns_zone_ids = [azurerm_private_dns_zone.eventhub[0].id]
-  }
-
   private_service_connection {
     name                           = format("%s-blob", module.storage_account_durable_function[0].resource_name)
     private_connection_resource_id = module.storage_account_durable_function[0].id
@@ -82,11 +77,6 @@ resource "azurerm_private_endpoint" "queue" {
   resource_group_name = var.resource_group_name
   subnet_id           = var.durable_function.private_endpoint_subnet_id
 
-  private_dns_zone_group {
-    name                 = format("%s-private-dns-zone-group", var.name)
-    private_dns_zone_ids = [azurerm_private_dns_zone.eventhub[0].id]
-  }
-
   private_service_connection {
     name                           = format("%s-queue", module.storage_account_durable_function[0].resource_name)
     private_connection_resource_id = module.storage_account_durable_function[0].id
@@ -112,11 +102,6 @@ resource "azurerm_private_endpoint" "table" {
   location            = var.location
   resource_group_name = var.resource_group_name
   subnet_id           = var.durable_function.private_endpoint_subnet_id
-
-  private_dns_zone_group {
-    name                 = format("%s-private-dns-zone-group", var.name)
-    private_dns_zone_ids = [azurerm_private_dns_zone.eventhub[0].id]
-  }
 
   private_service_connection {
     name                           = format("%s-table", module.storage_account_durable_function[0].resource_name)
@@ -165,7 +150,7 @@ resource "azurerm_function_app" "this" {
   resource_group_name        = var.resource_group_name
   location                   = var.location
   version                    = var.runtime_version
-  app_service_plan_id        = var.app_service_plan_id != null ? var.app_service_plan_id : azurerm_app_service_plan.this.id
+  app_service_plan_id        = var.app_service_plan_id != null ? var.app_service_plan_id : azurerm_app_service_plan.this[0].id
   storage_account_name       = module.storage_account.resource_name
   storage_account_access_key = module.storage_account.primary_access_key
 
