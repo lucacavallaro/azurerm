@@ -46,13 +46,13 @@ module "storage_account_durable_function" {
 resource "azurerm_private_endpoint" "blob" {
   count = var.durable_function.enable ? 1 : 0
 
-  name                = format("%s-blob-endpoint", module.storage_account_durable_function[0].resource_name)
+  name                = format("%s-blob-endpoint", module.storage_account_durable_function[0].name)
   location            = var.location
   resource_group_name = var.resource_group_name
   subnet_id           = var.durable_function.private_endpoint_subnet_id
 
   private_service_connection {
-    name                           = format("%s-blob", module.storage_account_durable_function[0].resource_name)
+    name                           = format("%s-blob", module.storage_account_durable_function[0].name)
     private_connection_resource_id = module.storage_account_durable_function[0].id
     is_manual_connection           = false
     subresource_names              = ["blob"]
@@ -72,13 +72,13 @@ resource "azurerm_private_endpoint" "blob" {
 resource "azurerm_private_endpoint" "queue" {
   count = var.durable_function.enable ? 1 : 0
 
-  name                = format("%s-queue-endpoint", module.storage_account_durable_function[0].resource_name)
+  name                = format("%s-queue-endpoint", module.storage_account_durable_function[0].name)
   location            = var.location
   resource_group_name = var.resource_group_name
   subnet_id           = var.durable_function.private_endpoint_subnet_id
 
   private_service_connection {
-    name                           = format("%s-queue", module.storage_account_durable_function[0].resource_name)
+    name                           = format("%s-queue", module.storage_account_durable_function[0].name)
     private_connection_resource_id = module.storage_account_durable_function[0].id
     is_manual_connection           = false
     subresource_names              = ["queue"]
@@ -98,13 +98,13 @@ resource "azurerm_private_endpoint" "queue" {
 resource "azurerm_private_endpoint" "table" {
   count = var.durable_function.enable ? 1 : 0
 
-  name                = format("%s-table-endpoint", module.storage_account_durable_function[0].resource_name)
+  name                = format("%s-table-endpoint", module.storage_account_durable_function[0].name)
   location            = var.location
   resource_group_name = var.resource_group_name
   subnet_id           = var.durable_function.private_endpoint_subnet_id
 
   private_service_connection {
-    name                           = format("%s-table", module.storage_account_durable_function[0].resource_name)
+    name                           = format("%s-table", module.storage_account_durable_function[0].name)
     private_connection_resource_id = module.storage_account_durable_function[0].id
     is_manual_connection           = false
     subresource_names              = ["table"]
@@ -151,7 +151,7 @@ resource "azurerm_function_app" "this" {
   location                   = var.location
   version                    = var.runtime_version
   app_service_plan_id        = var.app_service_plan_id != null ? var.app_service_plan_id : azurerm_app_service_plan.this[0].id
-  storage_account_name       = module.storage_account.resource_name
+  storage_account_name       = module.storage_account.name
   storage_account_access_key = module.storage_account.primary_access_key
 
   site_config {
